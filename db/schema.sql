@@ -1,0 +1,3 @@
+DROP DATA BASE IF EXISTS post_db;
+
+CREATE DATABASE post_db;
