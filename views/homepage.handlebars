@@ -1,18 +1,8 @@
-<!-- Loop over each blogPost in the blogPosts array -->
-{{#each blogPosts as |blogPost|}}
-  <div class="card">
-    <h2 class="card-header flex-row">
-      <a href="/blogPost/{{blogPost.id}}">{{blogPost.title}}</a>
-      <!--need to access the username property through the User object-->
-      <p>Posted by
-        {{blogPost.user.username}}
-        on
-        {{format_date blogPost.date_posted}}</p>
-    </h2>
-    <div class="card-body">
-      <p>
-        {{blogPost.content}}
-      </p>
-    </div>
+<!-- Loop over each blogPost in the posts array -->
+{{#each posts as |post|}}
+
+  {{ > post-info post}}
   </div>
+  {{else}}
+  <h6 class="pb-4 has-text-centered is-italic"> There are currently no posts</h6>
 {{/each}}
