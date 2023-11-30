@@ -1,37 +1,22 @@
-<div class="card">
-  <!--the header-->
-  <h2 class="card-header">
-    Signup
-  </h2>
-  <!--the form-->
-  <div class="card-body">
-    <form class="form signup-form">
-      <div class="form-group">
-        <label for="username-signup">Username</label>
-        <input
-          name="username-signup"
-          id="username-signup"
-          type="text"
-          autofocus="true"
-          class="form-input"
-        />
-      </div>
-      <div class="form-group">
-        <label for="password-signup">Password</label>
-        <input
-          name="password-signup"
-          id="password-signup"
-          type="password"
-          class="form-input"
-        />
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn">Signup!</button>
-      </div>
-    </form>
-    <!--the login link-->
-    <a href="/login" id="login-link">Login instead</a>
-  </div>
+<div class="column">
+  <h2 class="title pb-4">create new account:</h2><hr />
+  <form class="signup-form">
+    <div>
+      <label for="username-signup">username:</label>
+      <input type="text" id="username-signup" />
+    </div>
+    <div>
+      <label for="email-signup">email:</label>
+      <input type="text" id="email-signup" />
+    </div>
+    <div>
+      <label for="password-signup">password:</label>
+      <input type="password" id="password-signup" />
+    </div>
+    <div>
+      <button type="submit" class="button is-primary">signup</button>
+    </div>
+  </form>
 </div>
 
-<script src="./js/login.js"></script>
+<script src="/public/JS/signup.js"></script>
