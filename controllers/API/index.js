@@ -3,7 +3,7 @@ console.log("__dirname:", __dirname);
 
 const router = require("express").Router();
 
-const userRoutes = require("../API/User-routes.js");
+const userRoutes = require("./user-routes.js");
 const postRoutes = require("../API/post-routes.js");
 const commentRoutes = require("../API/comment-routes.js");
 
