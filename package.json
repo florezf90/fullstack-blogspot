@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/priyaravi23/mvc-tech-blog.git"
+    "url": "https://github.com/florezf90/fullstack-blogspot"
   },
   "author": "Priya Ravi",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/priyaravi23/mvc-tech-blog/issues"
+    "url": "https://github.com/florezf90/fullstack-blogspot"
   },
-  "homepage": "https://github.com/priyaravi23/mvc-tech-blog#readme",
+  "homepage": "https://github.com/florezf90/fullstack-blogspot",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "bulma": "^0.9.0",
