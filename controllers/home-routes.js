@@ -2,42 +2,45 @@ const router = require("express").Router();
 const sequelize = require("../config/connection");
 const { Post, User, Comment } = require("../models");
 
-// GET /
 router.get("/", async (req, res) => {
   try {
     console.log(req.session);
 
     const dbPostData = await Post.findAll({
-      attributes: ["id", "title", "date_posted", "content"],
+      attributes: ["id", "title", "created_at", "post_content"],
       include: [
         {
           model: Comment,
-          attributes: ["id", "content", "post_id", "user_id", "date_posted"],
+          attributes: [
+            "id",
+            "comment_text",
+            "post_id",
+            "user_id",
+            "created_at",
+          ],
           include: {
             model: User,
-            attributes: ["username"],
+            attributes: ["username", "twitter", "github"],
           },
         },
         {
           model: User,
-          attributes: ["username"],
+          attributes: ["username", "twitter", "github"],
         },
       ],
     });
 
     const posts = dbPostData.map((post) => post.get({ plain: true }));
-
     res.render("homepage", {
       posts,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json(err);
   }
 });
 
-// GET /login
 router.get("/login", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/");
@@ -47,7 +50,6 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-// GET /signup
 router.get("/signup", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/");
@@ -57,26 +59,31 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-// GET /post/:id
 router.get("/post/:id", async (req, res) => {
   try {
     const dbPostData = await Post.findOne({
       where: {
         id: req.params.id,
       },
-      attributes: ["id", "title", "date_posted", "content"],
+      attributes: ["id", "title", "created_at", "post_content"],
       include: [
         {
           model: Comment,
-          attributes: ["id", "content", "post_id", "user_id", "date_posted"],
+          attributes: [
+            "id",
+            "comment_text",
+            "post_id",
+            "user_id",
+            "created_at",
+          ],
           include: {
             model: User,
-            attributes: ["username"],
+            attributes: ["username", "twitter", "github"],
           },
         },
         {
           model: User,
-          attributes: ["username"],
+          attributes: ["username", "twitter", "github"],
         },
       ],
     });
@@ -86,16 +93,14 @@ router.get("/post/:id", async (req, res) => {
       return;
     }
 
-    // serialize the data
     const post = dbPostData.get({ plain: true });
 
-    // pass data to template
     res.render("single-post", {
       post,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json(err);
   }
 });

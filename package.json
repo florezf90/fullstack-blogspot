@@ -1,37 +1,38 @@
 {
-  "name": "florezf90-fullstack-blog",
+  "name": "mvc-tech-blog",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Model-View-Controller (MVC) Tech Blog",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "node seeds/index.js",
-    "start": "node server.js"
+    "test": "jest",
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "seed": "node seeds/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/florezf90/fullstack-blogspot.git"
+    "url": "git+https://github.com/priyaravi23/mvc-tech-blog.git"
   },
-  "keywords": [
-    "florezf90",
-    "florezf90-fullstack",
-    "florezf90-blog"
-  ],
-  "author": "florezf90",
-  "license": "MIT",
+  "author": "Priya Ravi",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/florezf90/fullstack-blogspot/issues"
+    "url": "https://github.com/priyaravi23/mvc-tech-blog/issues"
   },
-  "homepage": "https://github.com/florezf90/fullstack-blogspot#readme",
+  "homepage": "https://github.com/priyaravi23/mvc-tech-blog#readme",
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "connect-session-sequelize": "^7.1.7",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "express-handlebars": "^7.1.2",
-    "express-session": "^1.17.3",
-    "handlebars": "^4.7.8",
-    "mysql2": "^3.6.5",
-    "sequelize": "^6.35.1"
+    "bcrypt": "^5.0.0",
+    "bulma": "^0.9.0",
+    "connect-session-sequelize": "^6.1.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4",
+    "express-session": "^1.17.1",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.4",
+    "sequelize": "^5.21.13"
+  },
+  "devDependencies": {
+    "@creativebulma/bulma-divider": "^1.1.0",
+    "jest": "^26.0.1"
   }
 }

@@ -5,11 +5,12 @@ const withAuth = require("../../utils/auth");
 // GET /api/users
 router.get("/", async (req, res) => {
   try {
-    const dbUserdata = await User.findAll({
+    const dbUserData = await User.findAll({
       attributes: { exclude: ["password"] },
     });
-    res.json(dbUserdata);
+    res.json(dbUserData);
   } catch (err) {
+    console.error(err);
     res.status(500).json(err);
   }
 });
@@ -17,7 +18,7 @@ router.get("/", async (req, res) => {
 // GET /api/users/1
 router.get("/:id", async (req, res) => {
   try {
-    const dbUserdata = await User.findOne({
+    const dbUserData = await User.findOne({
       attributes: { exclude: ["password"] },
       where: {
         id: req.params.id,
@@ -25,11 +26,11 @@ router.get("/:id", async (req, res) => {
       include: [
         {
           model: Post,
-          attributes: ["id", "title", "content", "date_posted"],
+          attributes: ["id", "title", "post_content", "created_at"],
         },
         {
           model: Comment,
-          attributes: ["id", "content", "date_posted"],
+          attributes: ["id", "comment_text", "created_at"],
           include: {
             model: Post,
             attributes: ["title"],
@@ -38,12 +39,14 @@ router.get("/:id", async (req, res) => {
       ],
     });
 
-    if (!dbUserdata) {
-      res.status(404).json({ message: "No user found with this ID" });
+    if (!dbUserData) {
+      res.status(404).json({ message: "No user found with this id" });
       return;
     }
-    res.json(dbUserdata);
+
+    res.json(dbUserData);
   } catch (err) {
+    console.error(err);
     res.status(500).json(err);
   }
 });
@@ -55,22 +58,26 @@ router.post("/", async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
+      twitter: req.body.twitter,
+      github: req.body.github,
     });
 
     req.session.save(() => {
       req.session.user_id = dbUserData.id;
       req.session.username = dbUserData.username;
+      req.session.twitter = dbUserData.twitter;
+      req.session.github = dbUserData.github;
       req.session.loggedIn = true;
 
       res.json(dbUserData);
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json(err);
   }
 });
 
-// POST /api/users/login
+// LOGIN
 router.post("/login", async (req, res) => {
   try {
     const dbUserData = await User.findOne({
@@ -80,88 +87,81 @@ router.post("/login", async (req, res) => {
     });
 
     if (!dbUserData) {
-      res
-        .status(400)
-        .json({ message: "Incorrect password or email, please try again!" });
+      res.status(400).json({ message: "No user with that email address!" });
       return;
     }
 
     const validPassword = dbUserData.checkPassword(req.body.password);
 
     if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: "Incorrect password or email, please try again!" });
+      res.status(400).json({ message: "Incorrect password!" });
       return;
     }
 
     req.session.save(() => {
       req.session.user_id = dbUserData.id;
       req.session.username = dbUserData.username;
+      req.session.twitter = dbUserData.twitter;
+      req.session.github = dbUserData.github;
       req.session.loggedIn = true;
 
       res.json({ user: dbUserData, message: "You are now logged in!" });
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json(err);
   }
 });
 
-// POST /api/users/logout
-router.post("/logout", async (req, res) => {
-  try {
-    if (req.session.loggedIn) {
-      req.session.destroy(() => {
-        res.status(204).end();
-      });
-    } else {
-      res.status(404).end();
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
+router.post("/logout", (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
   }
 });
 
 // PUT /api/users/1
 router.put("/:id", withAuth, async (req, res) => {
   try {
-    const [rowsAffected] = await User.update(req.body, {
+    const dbUserData = await User.update(req.body, {
       individualHooks: true,
       where: {
         id: req.params.id,
       },
     });
 
-    if (rowsAffected === 0) {
+    if (!dbUserData[0]) {
       res.status(404).json({ message: "No user found with this id" });
       return;
     }
 
-    res.json({ message: "User updated successfully" });
+    res.json(dbUserData);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json(err);
   }
 });
 
+// DELETE /api/users/1
 router.delete("/:id", withAuth, async (req, res) => {
   try {
-    const rowsAffected = await User.destroy({
+    const dbUserData = await User.destroy({
       where: {
         id: req.params.id,
       },
     });
 
-    if (rowsAffected === 0) {
+    if (!dbUserData) {
       res.status(404).json({ message: "No user found with this id" });
       return;
     }
 
-    res.json({ message: "User deleted successfully" });
+    res.json(dbUserData);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json(err);
   }
 });

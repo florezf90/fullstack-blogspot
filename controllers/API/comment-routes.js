@@ -7,6 +7,7 @@ router.get("/", async (req, res) => {
     const dbCommentData = await Comment.findAll({});
     res.json(dbCommentData);
   } catch (err) {
+    console.error(err);
     res.status(500).json(err);
   }
 });
@@ -15,14 +16,15 @@ router.post("/", withAuth, async (req, res) => {
   try {
     if (req.session) {
       const dbCommentData = await Comment.create({
-        content: req.body.content,
+        comment_text: req.body.comment_text,
         post_id: req.body.post_id,
         user_id: req.session.user_id,
       });
       res.json(dbCommentData);
     }
   } catch (err) {
-    res.status(500).json(err);
+    console.error(err);
+    res.status(400).json(err);
   }
 });
 
@@ -35,11 +37,13 @@ router.delete("/:id", withAuth, async (req, res) => {
     });
 
     if (!dbCommentData) {
-      res.status(404).json({ message: "No comment found with this ID" });
+      res.status(404).json({ message: "No comment found with this id" });
       return;
     }
-    res, json(dbCommentData);
+
+    res.json(dbCommentData);
   } catch (err) {
+    console.error(err);
     res.status(500).json(err);
   }
 });
