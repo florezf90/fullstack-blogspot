@@ -6,19 +6,18 @@
   "scripts": {
     "test": "jest",
     "start": "node server.js",
-    "watch": "nodemon server.js",
     "seed": "node seeds/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/priyaravi23/mvc-tech-blog.git"
+    "url": "https://github.com/florezf90/fullstack-blogspot.git"
   },
   "author": "Priya Ravi",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/priyaravi23/mvc-tech-blog/issues"
+    "url": "https://github.com/florezf90/fullstack-blogspot.git"
   },
-  "homepage": "https://github.com/priyaravi23/mvc-tech-blog#readme",
+  "homepage": "https://github.com/florezf90/fullstack-blogspot.git",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "bulma": "^0.9.0",
@@ -30,9 +29,5 @@
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.4",
     "sequelize": "^5.21.13"
-  },
-  "devDependencies": {
-    "@creativebulma/bulma-divider": "^1.1.0",
-    "jest": "^26.0.1"
   }
 }
