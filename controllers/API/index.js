@@ -1,3 +1,6 @@
+const path = require("path");
+console.log("__dirname:", __dirname);
+
 const router = require("express").Router();
 
 const userRoutes = require("./User-routes.js");
