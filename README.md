@@ -24,7 +24,6 @@ It's important to mention that the code present is deployed to heroku.
     <li><a>Installation</a></li>
     <li><a >Usage</a></li>
     <li><a >Contributing and Contact</a></li>
-    <li><a >Acknowledgments</a></li>
     <li><a >License</a></li>
   </ol>
 </details>
